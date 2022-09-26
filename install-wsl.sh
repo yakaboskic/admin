@@ -14,4 +14,5 @@ cp dot-files/linux/generic/.gitconfig $HOME/.gitconfig
 cp dot-files/linux/generic/.vimrc $HOME/.vimrc
 
 # Get plug
+mkdir -p $HOME/.vim/autoload
 wget https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim -O $HOME/.vim/autoload/plug.vim
