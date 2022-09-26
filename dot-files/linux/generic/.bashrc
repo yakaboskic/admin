@@ -8,10 +8,19 @@ case $- in
       *) return;;
 esac
 
-export DISPLAY=:0.0
+#export DISPLAY=`grep -oP "(?<=nameserver ).+" /etc/resolv.conf`:0.0
+export DISPLAY=localhost:0.0
 
 # Instruct Python to execute a start up script
 export PYTHONSTARTUP=$HOME/.python_startup.py
+
+# Install Ruby Gems to ~/gems
+export GEM_HOME="$HOME/gems"
+export PATH="$HOME/gems/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+
+# For Gurobi
+export PATH="${PATH}:$HOME/gurobi951/linux64/bin"
 
 GREENFG='\[\e[0;32m\]'
 GREENFG2='\[\e[1;32m\]'
@@ -113,6 +122,8 @@ fi
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
+alias intuit='ssh -Y intuit'
+alias chp='ssh -Y chp'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -137,3 +148,6 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+
+# WSL Customizations
+alias firefox='/mnt/c/Program\ Files/Mozilla\ Firefox/firefox.exe'
