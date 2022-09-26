@@ -42,8 +42,11 @@ Plug 'git@github.com:vim-syntastic/syntastic.git'
 
 call plug#end()
 
-colorscheme gruvbox
-set background=dark
+try
+    colorscheme gruvbox
+    set background=dark
+    catch
+endtry
 
 if executable('rg')
     let g:rg_derive_root='true'
