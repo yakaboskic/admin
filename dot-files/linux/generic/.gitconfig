@@ -1,0 +1,8 @@
+[user]
+	email = chase.th@dartmouth.edu
+	name = Chase Yakaboski
+[core]
+	editor = vim
+[alias]
+ save = !git add -A && git commit -m 'chore: savepoint'
+ undo = reset HEAD~1 --mixed
