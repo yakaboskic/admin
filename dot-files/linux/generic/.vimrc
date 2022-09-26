@@ -1,121 +1,94 @@
-set nocompatible              " required
-filetype off                  " required
-set backspace=2
+""" Chase Yakaboski's VIMRC 
+"""
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-"call vundle#begin()
-
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
-
-" let Vundle manage Vundle, required
-"Plugin 'gmarik/Vundle.vim'
-
-"auto-install vim-plug
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall
-endif
-
-"manage bundles
-call plug#begin('~/.vim/bundle')
-
-"Bundle 'Valloric/YouCompleteMe'
-" Add all your plugins here (note older versions of Vundle used Bundle instead of Plugin)
-Plug 'vim-scripts/indentpython.vim'
-Plug 'tmhedberg/SimpylFold'
-let g:jedi#popup_on_dot = 0
-let g:jedi#goto_command = ""
-let g:jedi#goto_assignments_command = ""
-let g:jedi#goto_definitions_command = ""
-let g:jedi#documentation_command = "K"
-let g:jedi#usages_command = ""
-let g:jedi#completions_command = "<C-Space>"
-let g:jedi#rename_command = ""
-Plug 'davidhalter/jedi-vim'
-Plug 'vim-syntastic/syntastic'
-Plug 'nvie/vim-flake8'
-Plug 'jnurmine/Zenburn'
-Plug 'altercation/vim-colors-solarized'
-Plug 'scrooloose/nerdtree'
-Plug 'jistr/vim-nerdtree-tabs'
-Plug 'kien/ctrlp.vim'
-Plug 'tpope/vim-fugitive'
-Plug 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
-Plug 'vim-scripts/XML-Completion'
-
-" All of your Plugins must be added before the following line
-"call vundle#end()            " required
-call plug#end()
-filetype plugin indent on    " required
-
-" Enable folding
-set foldmethod=indent
-set foldlevel=99
-
-" Enable folding with the spacebar
-nnoremap <space> za
-let g:SimpylFold_docstring_preview=1
-
-
-"split navigations
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
-
-" Tabbing for Python
-au BufNewFile,BufRead *.py
-    \ set tabstop=4
-    \ set softtabstop=4
-    \ set shiftwidth=4
-    \ set textwidth=79
-    \ set expandtab
-    \ set autoindent
-    \ set fileformat=unix
-
-" Tabbing for C++
-au BufNewFile, BufRead *.cpp
-    \ set tabstop=4
-    \ set softtabstop=4
-    \ set shiftwidth=4
-    \ set autoindent
-
-" For Full-Stack Development
-au BufNewFile,BufRead *.js, *.html, *.css
-    \ set tabstop=2
-    \ set softtabstop=2
-    \ set shiftwidth=2
-
-" For Prolog Development
-au BufNewFile,BufRead *.pl set filetype=prolog
-
-" Flag Unnecessary Whitespace
-"au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
-
-set encoding=utf-8
-
-let g:ycm_autoclose_preview_window_after_completion=1
-let g:ycm_path_to_python_interpreter='/usr/local/Cellar/python3/3.6.4_2/bin/python3'
-map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
-
-let python_highlight_all=1
+" Basics
 syntax on
 
-set laststatus=2
-
-"if has('gui_running')
-"  set background=dark
-"  colorscheme solarized
-"else
-"  colorscheme zenburn
-"endif
-
-"call togglebg#map("<F5>")
-
+set noerrorbells
+set tabstop=4 softtabstop=4
+set shiftwidth=4
+set expandtab
+set smartindent
 set nu
+set hidden
+set nowrap
+set smartcase
+set noswapfile
+set nobackup
+set undodir=~/.vim/undodir
+set undofile
+set incsearch
+set scrolloff=8
+set equalalways
 
-set clipboard=unnamed
+set colorcolumn=80
+highlight ColorColumn ctermbg=0 guibg=lightgrey
 
+" Plug
+call plug#begin('~/.vim/plugged')
+
+Plug 'morhetz/gruvbox'
+Plug 'jremmen/vim-ripgrep'
+Plug 'tpope/vim-fugitive'
+Plug 'leafgarland/typescript-vim'
+Plug 'vim-utils/vim-man'
+Plug 'lyuts/vim-rtags'
+Plug 'git@github.com:kien/ctrlp.vim.git'
+Plug 'git@github.com:Valloric/YouCompleteMe.git'
+Plug 'mbbill/undotree'
+Plug 'vim-airline/vim-airline'
+Plug 'git@github.com:vim-syntastic/syntastic.git'
+
+
+call plug#end()
+
+colorscheme gruvbox
+set background=dark
+
+if executable('rg')
+    let g:rg_derive_root='true'
+endif
+
+let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc -exclude-standard']
+let mapleader = " "
+
+""let g:netrw_browse_split=0
+""let g:netrw_banner = 0
+""let g:netrw_winsize = 50
+
+let g:ctrlp_use_cache = 0
+
+nnoremap <leader>h :wincmd h<CR>
+nnoremap <leader>j :wincmd j<CR>
+nnoremap <leader>k :wincmd k<CR>
+nnoremap <leader>l :wincmd l<CR>
+nnoremap <leader>u :UndotreeShow<CR>
+nnoremap <leader>pv :wincmd v<bar> :Ex <bar> :vertical resize 30<CR>
+nnoremap <leader>ps :Rg<SPACE>
+nnoremap <silent> <Leader>+ :vertical resize +5<CR>
+nnoremap <silent> <Leader>= :wincmd =<CR>
+nnoremap <leader>vo :vs<SPACE>
+nnoremap <leader>q :q<CR>
+nnoremap <leader>qq :q!<CR>
+nnoremap <leader>x :x<CR>
+nnoremap <leader>w :w<CR>
+
+" YCM Settings
+nnoremap <silent> <Leader>gd :YcmCompleter GoTo<CR>
+nnoremap <silent> <Leader>gf :YcmCompleter FixIt<CR>
+
+" Windows Terminal Remaps
+nnoremap <leader>v <c-v>
+
+" Syntastic Settings
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+let g:syntastic_rst_checkers = ['sphinx']
+let g:syntastic_python_checkers = ['pylint']
